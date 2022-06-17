@@ -2,7 +2,7 @@ import os
 import logging
 
 from dotenv import load_dotenv
-from telegram import ForceReply, Update
+from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from google.cloud import dialogflow
 
@@ -19,9 +19,11 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     for text in texts:
         text_input = dialogflow.TextInput(text=text, language_code=language_code)
         query_input = dialogflow.QueryInput(text=text_input)
-        response = session_client.detect_intent(request={"session": session, "query_input": query_input})
+        response = session_client.detect_intent(
+            request={"session": session, "query_input": query_input}
+        )
 
-        return response.query_result.fulfillment_text
+    return response.query_result.fulfillment_text
 
 
 async def start(update: Update, context: ContextTypes) -> None:
@@ -31,8 +33,8 @@ async def start(update: Update, context: ContextTypes) -> None:
 async def user_greeting(update: Update, context: ContextTypes) -> None:
     app_id = os.environ['GOOGLE_PROJECT_ID']
     user_id = update.message.from_user.id
-    message = update.message.text.split()
-    bot_text = detect_intent_texts(app_id, user_id, message, 'ru')
+    message = update.message.text
+    bot_text = detect_intent_texts(app_id, user_id, [message], 'ru')
 
     await update.message.reply_text(bot_text)
 
