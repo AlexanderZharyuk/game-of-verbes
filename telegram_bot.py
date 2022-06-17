@@ -12,7 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 def detect_intent_texts(project_id, session_id, texts, language_code):
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+    credentials_file = os.path.join('json_files', os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+    file_path = os.path.abspath(credentials_file)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = file_path
+
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
 
@@ -37,9 +40,10 @@ async def user_greeting(update: Update, context: ContextTypes) -> None:
     app_id = os.environ['GOOGLE_PROJECT_ID']
     user_id = update.message.from_user.id
     message = update.message.text
-    bot_text = detect_intent_texts(app_id, user_id, [message], 'ru')
+    bot_answer = detect_intent_texts(app_id, user_id, [message], 'ru')
 
-    await update.message.reply_text(bot_text)
+    if bot_answer is not None:
+        await update.message.reply_text(bot_answer)
 
 
 def main() -> None:
