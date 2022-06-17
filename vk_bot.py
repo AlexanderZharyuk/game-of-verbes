@@ -6,7 +6,7 @@ import vk_api
 from dotenv import load_dotenv
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-from main import detect_intent_texts
+from dialog_flow_functions import detect_intent_texts
 
 
 def reply_to_user(event, vk_api):
