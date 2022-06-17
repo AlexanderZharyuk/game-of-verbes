@@ -15,11 +15,11 @@
 
 ### Примеры работы чат-ботов
 
-<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/vk-bot-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="220" />
+<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/vk-bot-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="220" />
 
 <br>
 
-<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/TG-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" height="350" />
+<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/TG-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" height="350" />
 
 
 ## Создано при помощи
