@@ -23,14 +23,14 @@ class BotLogger(logging.Handler):
         self.bot.send_message(text=log_entry, chat_id=self.chat_id)
 
 
-def start(update: Update, _: CallbackContext) -> None:
+def start(update: Update, context: CallbackContext) -> None:
     user = update.effective_user
     update.message.reply_markdown_v2(
         f'Привет, {user.mention_markdown_v2()}\!',
     )
 
 
-def bot_answer(update: Update, _: CallbackContext) -> None:
+def bot_answer(update: Update, context: CallbackContext):
     app_id = os.environ['GOOGLE_PROJECT_ID']
     user_id = update.message.from_user.id
     message = update.message.text
@@ -44,21 +44,20 @@ if __name__ == '__main__':
     load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
     admin_chat_id = os.environ['CHAT_ID']
-
-    updater = Updater(telegram_token)
-    updater.start_polling()
-    dispatcher = updater.dispatcher
-
+    updater = Updater(telegram_token, use_context=True)
     logger.setLevel(logging.INFO)
     logger.addHandler(BotLogger(updater.bot, admin_chat_id))
     logger.info('🔥 Бот запущен!')
 
-    while True:
-        try:
-            dispatcher.add_handler(CommandHandler("start", start))
-            dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, bot_answer))
-        except ConnectionError:
-            logger.warning('[TG BOT INFO] Потеря соединения, ухожу в сон на 1 минуту.')
-            time.sleep(60)
-        except Exception:
-            logger.exception('[TG BOT INFO] В работе бота возникла ошибка:')
+    try:
+        dispatcher = updater.dispatcher
+        dispatcher.add_handler(CommandHandler("start", start))
+        dispatcher.add_handler(MessageHandler(filters=Filters.all, callback=bot_answer))
+    except ConnectionError:
+        logger.exception('Connection error, ухожу в сон на 1 минуту.')
+        time.sleep(60)
+    except Exception:
+        logger.exception('Бот упал с ошибкой:')
+
+    updater.start_polling()
+    updater.idle()
