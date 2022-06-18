@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 def detect_intent_texts(project_id, session_id, texts, language_code):
     """Check intents in DialogFlow profile"""
-    credentials_file = os.path.join('json_files', os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+    credentials_file = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
     credentials_file_path = os.path.abspath(credentials_file)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_file_path
 
@@ -26,7 +26,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
     """Create intent in DialogFlow profile from json-file"""
-    credentials_file = os.path.join('json_files', os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+    credentials_file = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
     file_path = os.path.abspath(credentials_file)
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = file_path
 
