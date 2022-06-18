@@ -42,16 +42,16 @@ def reply_to_user(event, vk_api):
 if __name__ == '__main__':
     load_dotenv()
     vk_token = os.environ['VK_TOKEN']
-    telegram_token = os.environ['INFO_VK_BOT_TOKEN']
-    telegram_bot = telegram.Bot(telegram_token)
-    telegram_admin_id = os.environ['CHAT_ID']
+    tg_token = os.environ['INFO_VK_BOT_TOKEN']
+    admin_chat_id = os.environ['CHAT_ID']
+    bot = telegram.Bot(tg_token)
+    logger.setLevel(logging.INFO)
+    logger.addHandler(BotLogger(bot, admin_chat_id))
+    logger.info('🔥 Бот запущен!')
+
     vk_session = vk_api.VkApi(token=vk_token)
     vk_api = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
-
-    logger.setLevel(logging.INFO)
-    logger.addHandler(BotLogger(telegram_bot, telegram_admin_id))
-    logger.info('🔥 VK-Бот запущен!')
 
     while True:
         try:
@@ -59,7 +59,9 @@ if __name__ == '__main__':
                 if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                     reply_to_user(event, vk_api)
         except ConnectionError:
-                logger.warning('[VK BOT INFO] Потеря соединения, ухожу в сон на 1 минуту.')
-                time.sleep(60)
+            logger.exception('Connection error, ухожу в сон на 1 минуту.')
+            time.sleep(60)
+            continue
         except Exception:
-            logger.exception('[VK BOT INFO] В работе бота возникла ошибка:')
+            logger.exception('Бот упал с ошибкой:')
+            continue
