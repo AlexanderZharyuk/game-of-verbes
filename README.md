@@ -54,7 +54,6 @@ python3 dialog_flow_functions.py
 * Telegram-бот:
 ```
 python3 telegram_bot.py
-
 ```
 * VK-бот:
 ``` 
