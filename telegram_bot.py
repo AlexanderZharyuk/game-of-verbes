@@ -25,7 +25,6 @@ def bot_answer(update: Update, context: CallbackContext):
     user_id = update.message.from_user.id
     message = update.message.text
     bot_answer, answer_is_fallback = detect_intent_texts(app_id, user_id, message, 'ru')
-
     update.message.reply_text(bot_answer)
 
 
