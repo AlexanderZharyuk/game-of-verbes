@@ -10,31 +10,20 @@ from dotenv import load_dotenv
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 from dialog_flow_functions import detect_intent_texts
+from logger import BotLogger
 
 
 logger = logging.getLogger('Logger')
 
 
-class BotLogger(logging.Handler):
-
-    def __init__(self, bot, chat_id):
-        super().__init__()
-        self.bot = bot
-        self.chat_id = chat_id
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.bot.send_message(text=log_entry, chat_id=self.chat_id)
-
-
 def reply_to_user(event, vk_api):
     app_id = os.environ['GOOGLE_PROJECT_ID']
-    answer_to_user = detect_intent_texts(app_id, event.user_id, event.text.split(), 'ru')
+    bot_answer, answer_is_fallback = detect_intent_texts(app_id,  event.user_id, event.text, 'ru')
 
-    if answer_to_user:
+    if not answer_is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,
-            message=answer_to_user,
+            message=bot_answer,
             random_id=random.randint(1, 1000)
         )
 
@@ -43,10 +32,10 @@ if __name__ == '__main__':
     load_dotenv()
     vk_token = os.environ['VK_TOKEN']
     tg_token = os.environ['INFO_VK_BOT_TOKEN']
-    admin_chat_id = os.environ['CHAT_ID']
+    admin_tg_chat_id = os.environ['ADMIN_TG_ID']
     bot = telegram.Bot(tg_token)
     logger.setLevel(logging.INFO)
-    logger.addHandler(BotLogger(bot, admin_chat_id))
+    logger.addHandler(BotLogger(bot, admin_tg_chat_id))
     logger.info('🔥 Бот запущен!')
 
     vk_session = vk_api.VkApi(token=vk_token)
