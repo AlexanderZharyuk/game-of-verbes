@@ -1,6 +1,5 @@
 import os
 import json
-import pprint
 
 from google.cloud import dialogflow
 from dotenv import load_dotenv
