@@ -1,5 +1,6 @@
 import os
 import json
+import pprint
 
 from google.cloud import dialogflow
 from dotenv import load_dotenv
@@ -14,14 +15,13 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
 
-    for text in texts:
-        text_input = dialogflow.TextInput(text=text, language_code=language_code)
-        query_input = dialogflow.QueryInput(text=text_input)
-        response = session_client.detect_intent(
-            request={"session": session, "query_input": query_input}
-        )
+    text_input = dialogflow.TextInput(text=texts, language_code=language_code)
+    query_input = dialogflow.QueryInput(text=text_input)
+    response = session_client.detect_intent(
+        request={"session": session, "query_input": query_input}
+    )
 
-    return response.query_result.fulfillment_text
+    return response.query_result.fulfillment_text, response.query_result.intent.is_fallback
 
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
@@ -52,13 +52,13 @@ if __name__ == '__main__':
     load_dotenv()
     project_id = os.environ['GOOGLE_PROJECT_ID']
     intent_display_name = 'Как устроиться к вам на работу'
-    questions_file = os.path.join('json_files', 'questions.json')
+    questions_file = os.path.join('json_files', os.environ['QUESTIONS_FILE_NAME'])
     questions_file_path = os.path.abspath(questions_file)
 
     with open(questions_file_path, 'r') as json_file:
         answers_and_questions = json.load(json_file)
 
-    employment_questions = answers_and_questions['Устройство на работу']['questions']
-    employment_answer = answers_and_questions['Устройство на работу']['answer']
-
-    create_intent(project_id, intent_display_name, employment_questions, [employment_answer])
+    for intent_display_name, phrases in answers_and_questions.items():
+        employment_questions = phrases['questions']
+        employment_answer = phrases['answer']
+        create_intent(project_id, intent_display_name, employment_questions, [employment_answer])
