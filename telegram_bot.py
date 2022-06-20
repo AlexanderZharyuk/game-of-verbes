@@ -7,20 +7,10 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from dialog_flow_functions import detect_intent_texts
 
+from logger import BotLogger
+
 
 logger = logging.getLogger('Logger')
-
-
-class BotLogger(logging.Handler):
-
-    def __init__(self, bot, chat_id):
-        super().__init__()
-        self.bot = bot
-        self.chat_id = chat_id
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.bot.send_message(text=log_entry, chat_id=self.chat_id)
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -34,19 +24,18 @@ def bot_answer(update: Update, context: CallbackContext):
     app_id = os.environ['GOOGLE_PROJECT_ID']
     user_id = update.message.from_user.id
     message = update.message.text
-    bot_answer = detect_intent_texts(app_id, user_id, [message], 'ru')
+    bot_answer, answer_is_fallback = detect_intent_texts(app_id, user_id, message, 'ru')
 
-    if bot_answer:
-        update.message.reply_text(bot_answer)
+    update.message.reply_text(bot_answer)
 
 
 if __name__ == '__main__':
     load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
-    admin_chat_id = os.environ['CHAT_ID']
+    admin_tg_chat_id = os.environ['ADMIN_TG_ID']
     updater = Updater(telegram_token, use_context=True)
     logger.setLevel(logging.INFO)
-    logger.addHandler(BotLogger(updater.bot, admin_chat_id))
+    logger.addHandler(BotLogger(updater.bot, admin_tg_chat_id))
     logger.info('🔥 Бот запущен!')
 
     try:
