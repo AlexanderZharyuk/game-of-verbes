@@ -66,7 +66,7 @@ python3 vk_bot.py
 
 <br>
 
-<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/TG-preview.gif?raw=true" data-canonical-src="https://gyazo. com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" ​​height="350" />
+<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/TG-preview.gif?raw=true" data-canonical-src="https://gyazo. com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" height="350" />
 
 
 ## Created with
