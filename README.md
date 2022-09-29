@@ -1,6 +1,6 @@
 # Social Networks Support Bots
 
-**Game Of Verbs** company support bots!
+**Jardeko** company support bots!
 
 ## About the project
 
