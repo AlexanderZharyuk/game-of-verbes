@@ -71,7 +71,7 @@ python3 vk_bot.py
 
 ## Created with
 
-* [BITLY](https://bitly.com/) - Service for creating short links
+* [DialogFlow](https://dialogflow.cloud.google.com/) - Platform for learn bots answer to questions
 
 ## The authors
 
