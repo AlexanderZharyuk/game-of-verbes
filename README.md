@@ -1,24 +1,24 @@
-# Social Networks Support Bots 
+# Social Networks Support Bots
 
-Боты поддержки компании **Game Of Verbs**!
+**Game Of Verbs** company support bots!
 
-## О проекте
+## About the project
 
-Боты созданы для облегчения работы персонала компании. Они обучены благодаря платформе [DialogFlow](https://dialogflow.cloud.google.com/). Со списком вопросов вы можете ознакомиться в файле `json/questions.json`.
+Bots are created to facilitate the work of the company's staff. They are trained by the [DialogFlow](https://dialogflow.cloud.google.com/) platform. You can find the list of questions in the `json/questions.json` file.
 
-Боты работают в [VK](https://vk.com/public213993013) и Telegram [@FiziqueGameOfVerbsBot]
+Bots work in VK and Telergam socials.
 
-Вы можете протестировать их работу сами или посмотреть как они работают ниже.
+You can see how they work below.
 
-## Предустановка
+## Get started
 
-Если вы хотите протестировать ботов или же использовать их в своих целях - вы можете использовать этот репозиторий для выполнения этих задач, для этого: 
-1. Установите нобходимые библиотеки:
-``` 
+If you want to test bots or use them for your own purposes - you can use this repository to perform these tasks, for this:
+1. Install the required libraries:
+```
 pip install -r requirements.txt
 ```
-2. Создайте `.env` файл, в котором вы укажите ваши данные:
-``` 
+2. Create a `.env` file that contain your data:
+```
 TELEGRAM_TOKEN={YOUR-TELEGRAM-SUPPORT-BOT}
 INFO_VK_BOT_TOKEN={YOUR-TELEGRAM-BOT-TOKEN-THAT-CHECK-VK-BOT-STATUS}
 GOOGLE_APPLICATION_CREDENTIALS={FILENAME-WITH-YOUR-CREDENTIALS.json}
@@ -28,52 +28,51 @@ ADMIN_TG_ID={YOUR-ID-IN-TELEGRAM}
 QUESTIONS_FILE_NAME={YOUR-QUESTIONS-DATA.json}
 ```
 
-3. Если вы хотите обучить бота новым ответам - заполните файл, имя которого указали в `.env` в переменной `QUESTIONS_FILE_NAME` нужными данными. 
-В данном репозитории файл `json_files/questions.json`является шаблоном, вы можете заполнить его данными и указать его в `.env`.
+3. If you want to train the bot with new answers, fill in the file whose name is specified in `.env` in the `QUESTIONS_FILE_NAME` variable with the necessary data.
+In this repository, the `json_files/questions.json` file is a template, you can fill it with data and specify it in `.env`.
 
-Например:
+For example:
 ```
 QUESTIONS_FILE_NAME=questions.json
 ```
 
 P.S.
 
-json-файл с вашими GOOGLE-CREDENTIALS должен лежать там же, где и исполнительные файлы. Не сохраняйте его в других подпапках.
+json file with your GOOGLE-CREDENTIALS should be in the same place as the executable files. Do not save it in other subfolders.
 
-## Обучение ботов
-После того, как вы заполнили файл `questions.json` или файл с вашим названием - обучите ботов ответам на фразы. Для этого используйте команду:
+## Bot training
+After you have filled in the `questions.json` file or the file with your name, train the bots to answer the phrases. To do this, use the command:
 
 ```
 python3 dialog_flow_functions.py
 ```
 
-## Запуск ботов
-Все боты запускаются запуском отдельных файлов.
-Команды для запуска ботов:
+## Run bots
+All bots are started by running separate files.
+Commands for running bots:
 
-* Telegram-бот:
+* Telegram bot:
 ```
 python3 telegram_bot.py
 ```
-* VK-бот:
-``` 
+* VK-bot:
+```
 python3 vk_bot.py
 ```
 
-### Примеры работы чат-ботов
+### Examples of how chatbots work
 
-<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/vk-bot-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="220" />
+<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/vk-bot-preview.gif?raw=true" data-canonical-src="https:// gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="220" />
 
 <br>
 
-<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/TG-preview.gif?raw=true" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" height="350" />
+<img src="https://github.com/AlexanderZharyuk/game-of-verbs/blob/main/repo_media/TG-preview.gif?raw=true" data-canonical-src="https://gyazo. com/eb5c5741b6a9a16c692170a41a49c858.png" width="450" ​​height="350" />
 
 
-## Создано при помощи
+## Created with
 
-* [DEVMAN](https://dvmn.org/) - Обучающая платформа
-* [BITLY](https://bitly.com/) - Сервис по созданию коротких ссылок
+* [BITLY](https://bitly.com/) - Service for creating short links
 
-## Авторы
+## The authors
 
 * [Alexander Zharyuk](https://gist.github.com/AlexanderZharyuk)
